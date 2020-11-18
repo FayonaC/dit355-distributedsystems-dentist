@@ -1,0 +1,6 @@
+*tcplocalhost*
+.classpath
+.project
+.settings/
+target/
+.idea
