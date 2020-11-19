@@ -20,8 +20,11 @@ public class Publisher {
     }
 
     public static void main(String[] args) throws MqttException {
+        DataAccessLayer dal = new DataAccessLayer();
+        DentistRegistry messageTest = dal.loadDentistRegistry();
+        System.out.println(messageTest);
         Publisher p = new Publisher();
-        p.sendMessage();
+        p.sendMessage(messageTest);
         p.close();
     }
 
@@ -30,7 +33,7 @@ public class Publisher {
         middleware.close();
     }
 
-    private void sendMessage() throws MqttPersistenceException, MqttException {
+    private void sendMessage(DentistRegistry messageTest) throws MqttPersistenceException, MqttException {
         MqttMessage message = new MqttMessage();
         message.setPayload("Hello World!".getBytes());
         middleware.publish(TOPIC, message);

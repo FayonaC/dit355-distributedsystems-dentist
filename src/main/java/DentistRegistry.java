@@ -1,10 +1,11 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DentistRegistry {
     public static ArrayList<Dentist> Dentists = new ArrayList<>();
 
-    public DentistRegistry() {
-
+    public DentistRegistry(ArrayList<Dentist> dentists) {
+        Dentists = dentists;
     }
 
     public static ArrayList<Dentist> getDentists() {
@@ -13,5 +14,10 @@ public class DentistRegistry {
 
     public static void setDentists(ArrayList<Dentist> dentists) {
         Dentists = dentists;
+    }
+
+    @Override
+    public String toString() {
+        return "DentistRegistry{}";
     }
 }

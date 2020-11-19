@@ -1,21 +1,21 @@
 public class Dentist {
 
-    private String id;
+    private long id;
     private String dentistName;
     private String owner;
-    private Double dentistNumber;
+    private long dentistNumber;
     private String address;
     private String city;
-    private Double latitude;
-    private Double longitude;
+    private double latitude;
+    private double longitude;
     private String monday;
     private String tuesday;
     private String wednesday;
     private String thursday;
     private String friday;
 
-    public Dentist(String id, String dentistName, String owner, Double dentistNumber, String address, String city,
-                   Double latitude, Double longitude, String monday, String tuesday, String wednesday, String thursday,
+    public Dentist(long id, String dentistName, String owner, long dentistNumber, String address, String city,
+                   double latitude, double longitude, String monday, String tuesday, String wednesday, String thursday,
                    String friday) {
         this.id = id;
         this.dentistName = dentistName;
@@ -32,11 +32,11 @@ public class Dentist {
         this.friday = friday;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,11 +56,11 @@ public class Dentist {
         this.owner = owner;
     }
 
-    public Double getDentistNumber() {
+    public long getDentistNumber() {
         return dentistNumber;
     }
 
-    public void setDentistNumber(Double dentistNumber) {
+    public void setDentistNumber(long dentistNumber) {
         this.dentistNumber = dentistNumber;
     }
 
@@ -80,19 +80,19 @@ public class Dentist {
         this.city = city;
     }
 
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

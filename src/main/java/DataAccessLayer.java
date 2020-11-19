@@ -25,10 +25,10 @@ public class DataAccessLayer {
             Object jsonObject = jsonParser.parse(reader);
             JSONObject parser = (JSONObject) jsonObject;
             //Retrieves JSON for dentists
-            JSONObject dentistsJSON = (JSONObject) parser.get("dentists");
-            DentistRegistry = loadDentists(dentistsJSON);
+            JSONArray dentistsJSON = (JSONArray) parser.get("dentists");
+            DentistRegistry test = loadDentists(dentistsJSON);
 
-            return new DentistRegistry();
+            return test;
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         } catch(IOException e) {
@@ -39,34 +39,44 @@ public class DataAccessLayer {
         return null;
     }
 
+    /*private DentistRegistry loadDentists2(JSONObject obj) {
+        JSONArray dentistsJSON = (JSONArray) obj.get("risks");
+        ArrayList<Dentist> dentists = loadDentists(dentistsJSON);
+        DentistRegistry registry = new DentistRegistry(dentists);
+        return registry;
+    } */
+
+
     /**
      * Creates an ArrayList with Dentists from JSONArray
      * @param arr JSONArray
      * @return ArrayList with dentists
      */
-    private DentistRegistry loadDentists(JSONObject arr) {
-        ArrayList<Dentist> dentists = new ArrayList<Dentist>();
+        private DentistRegistry loadDentists(JSONArray arr) {
+            ArrayList<Dentist> dentists = new ArrayList<Dentist>();
 
-        for (Object dentist : arr) {
-            JSONObject dentistObj = (JSONObject) dentist;
+            for (Object dentist : arr) {
+                JSONObject dentistObj = (JSONObject) dentist;
 
-            String id = (String) dentistObj.get("id");
-            String dentistName = (String) dentistObj.get("name");
-            String owner = (String) dentistObj.get("owner");
-            Double dentistNumber = (Double) dentistObj.get("dentists");
-            String address = (String) dentistObj.get("address");
-            String city = (String) dentistObj.get("city");
-            Double latitude = (Double) dentistObj.get("latitude");
-            Double longitude = (Double) dentistObj.get("longitude");
-            String monday = (String) dentistObj.get("monday");
-            String tuesday = (String) dentistObj.get("tuesday");
-            String wednesday = (String) dentistObj.get("wednesday");
-            String thursday = (String) dentistObj.get("thursday");
-            String friday = (String) dentistObj.get("friday");
+                long id = (Long) dentistObj.get("id");
+                String dentistName = (String) dentistObj.get("name");
+                String owner = (String) dentistObj.get("owner");
+                long dentistNumber = (Long) dentistObj.get("dentists");
+                String address = (String) dentistObj.get("address");
+                String city = (String) dentistObj.get("city");
+                double latitude = (Double) dentistObj.get("latitude");
+                double longitude = (Double) dentistObj.get("longitude");
+                String monday = (String) dentistObj.get("monday");
+                String tuesday = (String) dentistObj.get("tuesday");
+                String wednesday = (String) dentistObj.get("wednesday");
+                String thursday = (String) dentistObj.get("thursday");
+                String friday = (String) dentistObj.get("friday");
 
-            dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city, latitude, longitude, monday, tuesday, wednesday, thursday, friday));
+                dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city,
+                        latitude, longitude, monday, tuesday, wednesday, thursday,
+                        friday));
+            }
+            DentistRegistry registry = new DentistRegistry(dentists);
+            return registry;
         }
-
-        return DentistRegistry;
     }
-}
