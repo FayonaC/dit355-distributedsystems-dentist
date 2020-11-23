@@ -137,4 +137,16 @@ public class Dentist {
     }
 
     /*add toString*/
+    @Override
+    public String toString() {
+        return "\n" + "Business Name: " + this.dentistName +"\n"+
+                "Owner: " + this.owner + "\n" +
+                "Address: " + this.address + "\n" +
+                "Opening Hours: " + "\n" +
+                "\t Monday - " + this.monday +  "\n" +
+                "\t Tuesday - " + this.tuesday + "\n" +
+                "\t Wednesday - " + this.wednesday + "\n" +
+                "\t Thursday - " + this.thursday + "\n" +
+                "\t Friday - " + this.friday +"\n" ;
+    }
 }
