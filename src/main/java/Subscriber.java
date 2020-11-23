@@ -27,12 +27,9 @@ public class Subscriber implements MqttCallback {
         middleware.setCallback(this);
     }
 
-    public static void main(String[] args) throws MqttException, InterruptedException {
-        Subscriber s = new Subscriber();
-        s.subscribeToMessages();
-    }
 
-    private void subscribeToMessages() {
+
+    void subscribeToMessages() {
         THREAD_POOL.submit(() -> {
             try {
                 middleware.subscribe(TOPIC);

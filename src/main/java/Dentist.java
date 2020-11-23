@@ -135,4 +135,6 @@ public class Dentist {
     public void setFriday(String friday) {
         this.friday = friday;
     }
+
+    /*add toString*/
 }

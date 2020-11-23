@@ -19,5 +19,6 @@ public class DentistRegistry {
     @Override
     public String toString() {
         return "DentistRegistry{}";
-    }
+    } /*print actual data*/
+
 }

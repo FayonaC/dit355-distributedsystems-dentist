@@ -64,13 +64,17 @@ public class DataAccessLayer {
                 long dentistNumber = (Long) dentistObj.get("dentists");
                 String address = (String) dentistObj.get("address");
                 String city = (String) dentistObj.get("city");
-                double latitude = (Double) dentistObj.get("latitude");
-                double longitude = (Double) dentistObj.get("longitude");
-                String monday = (String) dentistObj.get("monday");
-                String tuesday = (String) dentistObj.get("tuesday");
-                String wednesday = (String) dentistObj.get("wednesday");
-                String thursday = (String) dentistObj.get("thursday");
-                String friday = (String) dentistObj.get("friday");
+
+                JSONObject coordinateObj = (JSONObject) dentistObj.get("coordinate");
+                JSONObject openinghoursObj = (JSONObject) dentistObj.get("openinghours");
+
+                double latitude = (Double) coordinateObj.get("latitude");
+                double longitude = (Double) coordinateObj.get("longitude");
+                String monday = (String) openinghoursObj.get("monday");
+                String tuesday = (String) openinghoursObj.get("tuesday");
+                String wednesday = (String) openinghoursObj.get("wednesday");
+                String thursday = (String) openinghoursObj.get("thursday");
+                String friday = (String) openinghoursObj.get("friday");
 
                 dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city,
                         latitude, longitude, monday, tuesday, wednesday, thursday,
