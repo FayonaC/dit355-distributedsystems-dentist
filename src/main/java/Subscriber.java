@@ -13,7 +13,7 @@ public class Subscriber implements MqttCallback {
 
     private final static ExecutorService THREAD_POOL = Executors.newSingleThreadExecutor();
 
-    private final static String TOPIC = "test";
+    private final static String TOPIC = "Dentists";
 
     private final static String BROKER = "tcp://localhost:1883";
 
