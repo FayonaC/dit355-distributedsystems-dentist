@@ -6,7 +6,7 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
 public class Publisher {
 
-    private final static String TOPIC = "test";
+    private final static String TOPIC = "Dentists";
 
     private final static String BROKER = "tcp://localhost:1883";
 
@@ -19,20 +19,17 @@ public class Publisher {
         middleware.connect();
     }
 
-    public static void main(String[] args) throws MqttException {
-        Publisher p = new Publisher();
-        p.sendMessage();
-        p.close();
-    }
 
-    private void close() throws MqttException {
+
+    void close() throws MqttException {
         middleware.disconnect();
         middleware.close();
     }
 
-    private void sendMessage() throws MqttPersistenceException, MqttException {
+    void sendMessage(DentistRegistry messageTest) throws MqttPersistenceException, MqttException {
         MqttMessage message = new MqttMessage();
-        message.setPayload("Hello World!".getBytes());
+        String msg = messageTest.toString();
+        message.setPayload(msg.getBytes()); /*move messageTest into payload*/
         middleware.publish(TOPIC, message);
     }
 }
