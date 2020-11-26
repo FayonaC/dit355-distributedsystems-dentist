@@ -139,14 +139,21 @@ public class Dentist {
     /*add toString*/
     @Override
     public String toString() {
-        return "\n" + "Business Name: " + this.dentistName +"\n"+
-                "Owner: " + this.owner + "\n" +
-                "Address: " + this.address + "\n" +
-                "Opening Hours: " + "\n" +
-                "\t Monday - " + this.monday +  "\n" +
-                "\t Tuesday - " + this.tuesday + "\n" +
-                "\t Wednesday - " + this.wednesday + "\n" +
-                "\t Thursday - " + this.thursday + "\n" +
-                "\t Friday - " + this.friday +"\n" ;
+        return "\n{\n" +
+                "\"name\": \"" + dentistName + "\"" +
+                ",\n\"owner\": \"" + owner + "\"" +
+                ",\n\"dentists\": " + dentistNumber +
+                ",\n\"address\": \"" + address + "\"" +
+                ",\n\"city\": \"" + city + "\"" +
+                ",\n\"coordinates\": {" +
+                "\n\"latitude\": " + latitude +
+                ",\n\"longitude\": " + longitude +
+                "\n},\n\"openinghours\": {" +
+                "\n\"monday\": \"" + monday + "\"" +
+                ",\n\"tuesday\": \"" + tuesday + "\"" +
+                ",\n\"wednesday\": \"" + wednesday + "\"" +
+                ",\n\"thursday\": \"" + thursday + "\"" +
+                ",\n\"friday\": \"" + friday + "\"" +
+                "\n}\n}";
     }
 }
