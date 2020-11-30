@@ -8,10 +8,9 @@
 # Installation Guide
 1. Clone repository to your machine
 2. Open a terminal window (e.g. Command Prompt) and move to the root folder of the repository. Enter command `mvn clean install` This will create a target folder.
-3. To ensure that installation was successful, check target folder for subscriber.jar and publisher.jar files.
-4. Move to target folder and enter command `java -jar subscriber.jar`. This will enable the subscriber component to start listening to the MQTT Broker.
-5. Open a new terminal window and move to target folder. Enter command `java -jar publisher.jar`. This will enable to publisher component to send messages.
-6. Add json-simple.jar as an external library
+3. To ensure that installation was successful, check target folder for coordinator.jar.
+4. Move to target folder and enter command `java -jar coordinator.jar`. This will enable the subscriber component to start listening to the MQTT Broker and the publisher component to send messages.
+5. Add json-simple.jar as an external library
     * In IntelliJ:
      1. Open the repository as a project and right click on the dentist project folder then press F4.
      2. Click on the Libraries tab and then the plus symbol, and finally Java.
