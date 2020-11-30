@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DentistRegistry {
-    public static ArrayList<Dentist> Dentists = new ArrayList<>();
+    private static ArrayList<Dentist> Dentists = new ArrayList<>();
 
     public DentistRegistry(ArrayList<Dentist> dentists) {
         Dentists = dentists;
@@ -16,9 +16,14 @@ public class DentistRegistry {
         Dentists = dentists;
     }
 
+    public void addDentist(Dentist dentist) {
+        Dentists.add(dentist);
+    }
+
     @Override
     public String toString() {
-        return Dentists.toString();
-    } /*print actual data*/
+        return "{\n" +
+                "\"dentists\" : " + Dentists.toString() + "\n}";
+    }
 
 }
