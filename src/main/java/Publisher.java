@@ -19,8 +19,6 @@ public class Publisher {
         middleware.connect();
     }
 
-
-
     void close() throws MqttException {
         middleware.disconnect();
         middleware.close();

@@ -3,8 +3,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class Coordinator {
 
     public static void main(String[] args) throws MqttException {
-
-        //try {
             Subscriber s = new Subscriber();
             s.subscribeToMessages();
 
@@ -13,8 +11,7 @@ public class Coordinator {
             Publisher p = new Publisher();
             p.sendMessage(messageTest);
             p.close();
-        //} catch (Exception e) {
-            ///e.printStackTrace();
-        //}
     }
 }
+
+

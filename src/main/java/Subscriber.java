@@ -27,8 +27,6 @@ public class Subscriber implements MqttCallback {
         middleware.setCallback(this);
     }
 
-
-
     void subscribeToMessages() {
         THREAD_POOL.submit(() -> {
             try {
@@ -44,13 +42,23 @@ public class Subscriber implements MqttCallback {
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("Connection lost!");
+//        try {
+//            middleware.disconnect();
+//            middleware.close();
+//        } catch (MqttException e) {
+//            e.printStackTrace();
+//        }
+
+        // reestablish connection lost? PLan b
+        System.out.println("HELLO THIS IS LINE 53");
         try {
-            middleware.disconnect();
-            middleware.close();
-        } catch (MqttException e) {
-            e.printStackTrace();
+            middleware.reconnect();
+            middleware.setCallback(this);
+            System.out.println("THIS IS LINE 57");
+        } catch (Exception e) {
+            // e.printStackTrace();
+            System.out.println(throwable);
         }
-        // Try to reestablish? Plan B?
     }
 
     @Override
