@@ -42,23 +42,20 @@ public class Subscriber implements MqttCallback {
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("Connection lost!");
-//        try {
-//            middleware.disconnect();
-//            middleware.close();
-//        } catch (MqttException e) {
-//            e.printStackTrace();
-//        }
+       while (middleware.isConnected() == false) {
 
-        // reestablish connection lost? PLan b
-        System.out.println("HELLO THIS IS LINE 53");
-        try {
+
+           // reestablish connection lost? PLan b
+           try {
             middleware.reconnect();
-            middleware.setCallback(this);
-            System.out.println("THIS IS LINE 57");
-        } catch (Exception e) {
-            // e.printStackTrace();
-            System.out.println(throwable);
-        }
+
+           // middleware.setCallback(this);  // unclear what this method does (still works with or without).
+           } catch (Exception e) {
+               throwable.getMessage();
+           }
+       }
+        System.out.println("Connection to broker reestablished!");
+        System.out.println(middleware.isConnected());
     }
 
     @Override
