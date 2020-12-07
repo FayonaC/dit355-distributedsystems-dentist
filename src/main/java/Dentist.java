@@ -37,7 +37,13 @@ public class Dentist {
     }
 
     public void setId(long id) {
-        this.id = id;
+        String idValidation = String.valueOf(id); // Coverts the long id to a String to be used for validation
+        if (idValidation.matches("[0-9]{2}")) {
+            this.id = id;
+        }
+        else {
+            throw new IllegalArgumentException("Id has to be two digits long");
+        }
     }
 
     public String getDentistName() {
@@ -45,6 +51,9 @@ public class Dentist {
     }
 
     public void setDentistName(String dentistName) {
+        if(dentistName.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.dentistName = dentistName;
     }
 
@@ -53,6 +62,9 @@ public class Dentist {
     }
 
     public void setOwner(String owner) {
+        if(owner.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.owner = owner;
     }
 
@@ -61,7 +73,13 @@ public class Dentist {
     }
 
     public void setDentistNumber(long dentistNumber) {
-        this.dentistNumber = dentistNumber;
+        String dentistNumberValidation = String.valueOf(dentistNumber); // Coverts the long dentistNumber to a String to be used for validation
+        if (dentistNumberValidation.matches("[0-9]{2}")) {
+            this.dentistNumber = dentistNumber;
+        }
+        else {
+            throw new IllegalArgumentException("Number of dentists has to be two digits long");
+        }
     }
 
     public String getAddress() {
@@ -69,6 +87,9 @@ public class Dentist {
     }
 
     public void setAddress(String address) {
+        if(address.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.address = address;
     }
 
@@ -77,6 +98,9 @@ public class Dentist {
     }
 
     public void setCity(String city) {
+        if(city.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.city = city;
     }
 
@@ -101,6 +125,9 @@ public class Dentist {
     }
 
     public void setMonday(String monday) {
+        if(monday.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Monday can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.monday = monday;
     }
 
@@ -109,6 +136,9 @@ public class Dentist {
     }
 
     public void setTuesday(String tuesday) {
+        if(tuesday.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Tuesday can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.tuesday = tuesday;
     }
 
@@ -117,6 +147,9 @@ public class Dentist {
     }
 
     public void setWednesday(String wednesday) {
+        if(wednesday.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Wednesday can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.wednesday = wednesday;
     }
 
@@ -125,6 +158,9 @@ public class Dentist {
     }
 
     public void setThursday(String thursday) {
+        if(thursday.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Thursday can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.thursday = thursday;
     }
 
@@ -133,6 +169,9 @@ public class Dentist {
     }
 
     public void setFriday(String friday) {
+        if(friday.matches("[a-zA-Z'-]+")) {
+            throw new IllegalArgumentException("Friday can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        }
         this.friday = friday;
     }
 
