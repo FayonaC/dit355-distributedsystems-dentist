@@ -14,6 +14,11 @@ public class Dentist {
     private String thursday;
     private String friday;
 
+    /**
+     * TODO: Change so constructor uses setters.
+     * Before: this.id = id;
+     * After: setId(id);
+     */
     public Dentist(long id, String dentistName, String owner, long dentistNumber, String address, String city,
                    double latitude, double longitude, String monday, String tuesday, String wednesday, String thursday,
                    String friday) {
@@ -36,6 +41,12 @@ public class Dentist {
         return id;
     }
 
+    /**
+     * If we have more than 99 users then 2 digits won't be enough.
+     * Could've checked the same thing by using if (id < 100).
+     * Request generator has to send requests from 100 different users
+     * so I think we might need at least a 3 digit userid.
+     */
     public void setId(long id) {
         String idValidation = String.valueOf(id); // Coverts the long id to a String to be used for validation
         if (idValidation.matches("[0-9]{1,2}")) {
@@ -50,6 +61,9 @@ public class Dentist {
         return dentistName;
     }
 
+    /**
+     * Won't allow "Test" but allows "Test Test" as name.
+     */
     public void setDentistName(String dentistName) {
         if(dentistName.matches("[a-zA-Z'-]+")) {
             throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
@@ -61,6 +75,9 @@ public class Dentist {
         return owner;
     }
 
+    /**
+     * Won't allow "Test" but allows "Test Test" as name.
+     */
     public void setOwner(String owner) {
         if(owner.matches("[a-zA-Z'-]+")) {
             throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
@@ -86,6 +103,9 @@ public class Dentist {
         return address;
     }
 
+    /**
+     * Won't allow "Slottskogen" and some addresses also have numbers.
+     */
     public void setAddress(String address) {
         if(address.matches("[a-zA-Z'-]+")) {
             throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
@@ -97,6 +117,9 @@ public class Dentist {
         return city;
     }
 
+    /**
+     * Won't accept "Gothenburg" as a city but "Gothenburg " works.
+     */
     public void setCity(String city) {
         if(city.matches("[a-zA-Z'-]+")) {
             throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
@@ -108,6 +131,9 @@ public class Dentist {
         return latitude;
     }
 
+    /**
+     * Most useless comment: Doesn't work, something's weird with the regex.
+     */
     public void setLatitude(double latitude) {
         String latitudeValidation = String.valueOf(latitude); // Coverts the double latitude to a String to be used for validation
         if (latitudeValidation.matches(".*[0-9][.]{9}")) {
@@ -122,6 +148,9 @@ public class Dentist {
         return longitude;
     }
 
+    /**
+     * Most useless comment: Doesn't work, something's weird with the regex.
+     */
     public void setLongitude(double longitude) {
         String longitudeValidation = String.valueOf(latitude); // Coverts the double longitude to a String to be used for validation
         if (longitudeValidation.matches(".*[0-9][.]{9}")) {
@@ -136,6 +165,10 @@ public class Dentist {
         return monday;
     }
 
+    /**
+     * Goes for all dates:
+     * It'll allow me to set times like "06:00sdfa" and "06:00-0" etc
+     */
     public void setMonday(String monday) {
         if(monday.matches(".*[0-9][:][-]{9,11}")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
