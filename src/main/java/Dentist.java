@@ -140,12 +140,13 @@ public class Dentist {
     @Override
     public String toString() {
         return "\n{\n" +
-                "\"name\": \"" + dentistName + "\"" +
+                "\"id\": \"" + id + "\"" +
+                ",\n\"name\": \"" + dentistName + "\"" +
                 ",\n\"owner\": \"" + owner + "\"" +
                 ",\n\"dentists\": " + dentistNumber +
                 ",\n\"address\": \"" + address + "\"" +
                 ",\n\"city\": \"" + city + "\"" +
-                ",\n\"coordinates\": {" +
+                ",\n\"coordinate\": {" +
                 "\n\"latitude\": " + latitude +
                 ",\n\"longitude\": " + longitude +
                 "\n},\n\"openinghours\": {" +
