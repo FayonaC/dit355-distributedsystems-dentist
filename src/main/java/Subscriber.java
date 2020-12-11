@@ -17,7 +17,7 @@ public class Subscriber implements MqttCallback {
 
     private final static String BROKER = "tcp://localhost:1883";
 
-    private final static String USER_ID = "test-subscriber";
+    private final static String USER_ID = "dentist-subscriber";
 
     private final IMqttClient middleware;
 

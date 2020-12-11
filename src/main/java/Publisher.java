@@ -10,7 +10,7 @@ public class Publisher {
 
     private final static String BROKER = "tcp://localhost:1883";
 
-    private final static String USER_ID = "test-publisher";
+    private final static String USER_ID = "dentist-publisher";
 
     private final IMqttClient middleware;
 
