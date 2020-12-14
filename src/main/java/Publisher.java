@@ -24,10 +24,11 @@ public class Publisher {
         middleware.close();
     }
 
-    void sendMessage(DentistRegistry messageTest) throws MqttPersistenceException, MqttException {
-        MqttMessage message = new MqttMessage();
-        String msg = messageTest.toString();
-        message.setPayload(msg.getBytes()); /*move messageTest into payload*/
-        middleware.publish(TOPIC, message);
+    void sendMessage(DentistRegistry message) throws MqttPersistenceException, MqttException {
+        MqttMessage mqttMessage = new MqttMessage();
+        mqttMessage.setRetained(true);
+        String msg = message.toString();
+        mqttMessage.setPayload(msg.getBytes()); /*move messageTest into payload*/
+        middleware.publish(TOPIC, mqttMessage);
     }
 }
