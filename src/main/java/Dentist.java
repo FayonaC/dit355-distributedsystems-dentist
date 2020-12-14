@@ -140,7 +140,7 @@ public class Dentist {
     @Override
     public String toString() {
         return "\n{\n" +
-                "\"id\": \"" + id + "\"" +
+                "\"id\": "+ id +
                 ",\n\"name\": \"" + dentistName + "\"" +
                 ",\n\"owner\": \"" + owner + "\"" +
                 ",\n\"dentists\": " + dentistNumber +
