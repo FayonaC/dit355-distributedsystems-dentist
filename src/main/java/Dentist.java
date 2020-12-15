@@ -22,38 +22,32 @@ public class Dentist {
     public Dentist(long id, String dentistName, String owner, long dentistNumber, String address, String city,
                    double latitude, double longitude, String monday, String tuesday, String wednesday, String thursday,
                    String friday) {
-        this.id = id;
-        this.dentistName = dentistName;
-        this.owner = owner;
-        this.dentistNumber = dentistNumber;
-        this.address = address;
-        this.city = city;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
+        setId(id);
+        setDentistName(dentistName);
+        setOwner(owner);
+        setDentistNumber(dentistNumber);
+        setAddress(address);
+        setCity(city);
+        setLatitude(latitude);
+        setLongitude(longitude);
+        setMonday(monday);
+        setTuesday(tuesday);
+        setWednesday(wednesday);
+        setThursday(thursday);
+        setFriday(friday);
     }
 
     public long getId() {
         return id;
     }
 
-    /**
-     * If we have more than 99 users then 2 digits won't be enough.
-     * Could've checked the same thing by using if (id < 100).
-     * Request generator has to send requests from 100 different users
-     * so I think we might need at least a 3 digit userid.
-     */
     public void setId(long id) {
         String idValidation = String.valueOf(id); // Coverts the long id to a String to be used for validation
-        if (idValidation.matches("[0-9]{1,2}")) {
+        if (idValidation.matches("[0-9]{1,4}")) { // This allows there to be up to 9999 dental offices
             this.id = id;
         }
         else {
-            throw new IllegalArgumentException("Id can be between one and two digits long");
+            throw new IllegalArgumentException("Id can be between one and four digits long");
         }
     }
 
@@ -61,11 +55,8 @@ public class Dentist {
         return dentistName;
     }
 
-    /**
-     * Won't allow "Test" but allows "Test Test" as name.
-     */
     public void setDentistName(String dentistName) {
-        if(dentistName.matches("[a-zA-Z'-]+")) {
+        if(dentistName.matches("[a-zA-Z'-]*")) {
             throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.dentistName = dentistName;
@@ -75,11 +66,8 @@ public class Dentist {
         return owner;
     }
 
-    /**
-     * Won't allow "Test" but allows "Test Test" as name.
-     */
     public void setOwner(String owner) {
-        if(owner.matches("[a-zA-Z'-]+")) {
+        if(owner.matches("[a-zA-Z'-]*")) {
             throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.owner = owner;
@@ -103,12 +91,9 @@ public class Dentist {
         return address;
     }
 
-    /**
-     * Won't allow "Slottskogen" and some addresses also have numbers.
-     */
     public void setAddress(String address) {
-        if(address.matches("[a-zA-Z'-]+")) {
-            throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+        if(address.matches("^[a-zA-Z0-9]+$")) {
+            throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, digits, dashes, and single quotes");
         }
         this.address = address;
     }
@@ -117,11 +102,8 @@ public class Dentist {
         return city;
     }
 
-    /**
-     * Won't accept "Gothenburg" as a city but "Gothenburg " works.
-     */
     public void setCity(String city) {
-        if(city.matches("[a-zA-Z'-]+")) {
+        if(city.matches("^[a-zA-Z]+$")) {
             throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.city = city;
@@ -131,12 +113,13 @@ public class Dentist {
         return latitude;
     }
 
-    /**
-     * Most useless comment: Doesn't work, something's weird with the regex.
-     */
     public void setLatitude(double latitude) {
         String latitudeValidation = String.valueOf(latitude); // Coverts the double latitude to a String to be used for validation
-        if (latitudeValidation.matches(".*[0-9][.]{9}")) {
+        if (latitudeValidation.matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+            /*
+            * The regex was taken from this StackOverFlow forum: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+            * on December 15th, 2020
+            */
             this.latitude = latitude;
         }
         else {
@@ -148,12 +131,13 @@ public class Dentist {
         return longitude;
     }
 
-    /**
-     * Most useless comment: Doesn't work, something's weird with the regex.
-     */
     public void setLongitude(double longitude) {
         String longitudeValidation = String.valueOf(latitude); // Coverts the double longitude to a String to be used for validation
-        if (longitudeValidation.matches(".*[0-9][.]{9}")) {
+        if (longitudeValidation.matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+            /*
+             * The regex was taken from this StackOverFlow forum: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+             * on December 15th, 2020
+             */
             this.longitude = longitude;
         }
         else {
@@ -170,7 +154,7 @@ public class Dentist {
      * It'll allow me to set times like "06:00sdfa" and "06:00-0" etc
      */
     public void setMonday(String monday) {
-        if(monday.matches(".*[0-9][:][-]{9,11}")) {
+        if(monday.matches("^[0-9][:][-]{9,11}$")) { // This could be changed to an eleven character limit if we're allowed to add 0s to the JSON which should (hopefully) make the validation easier/correct
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.monday = monday;
@@ -181,7 +165,7 @@ public class Dentist {
     }
 
     public void setTuesday(String tuesday) {
-        if(tuesday.matches(".*[0-9][:][-]{9,11}")) {
+        if(tuesday.matches("^[0-9][:][-]{9,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.tuesday = tuesday;
@@ -192,7 +176,7 @@ public class Dentist {
     }
 
     public void setWednesday(String wednesday) {
-        if(wednesday.matches(".*[0-9][:][-]{9,11}")) {
+        if(wednesday.matches("^[0-9][:][-]{9,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.wednesday = wednesday;
@@ -203,7 +187,7 @@ public class Dentist {
     }
 
     public void setThursday(String thursday) {
-        if(thursday.matches(".*[0-9][:][-]{9,11}")) {
+        if(thursday.matches("^[0-9][:][-]{9,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.thursday = thursday;
@@ -214,7 +198,7 @@ public class Dentist {
     }
 
     public void setFriday(String friday) {
-        if(friday.matches(".*[0-9][:][-]{9,11}")) {
+        if(friday.matches("^[0-9][:][-]{9,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.friday = friday;
