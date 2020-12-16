@@ -1,68 +1,47 @@
-import java.nio.file.*;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-
 public class Coordinator {
-    // Change this based on what directory/folder your dentists.json is in.
-    private static final String dentistDirPath = "././";
-
+    /*Current idea:
+        Retrieve JSON at start of the component and save to a variable.
+        Use a while loop that continuously retrieves JSON from the Dentist Registry and saves it to another variable.
+        Then compare the two variables to see if the JSON has changed, if so, publish the changed JSON.
+        This way the component doesn't publish unless there has been a change to the JSON. */
     public static void main(String[] args) {
         try {
-            // Load the dentists for the first time
-            DataAccessLayer dal = new DataAccessLayer();
-            DentistRegistry dentists = dal.loadDentistRegistry();
+            while (true) {
+                // Load the dentists for the first time
+                DataAccessLayer dal = new DataAccessLayer(false);
+                DentistRegistry currentRegistry = dal.loadDentistRegistry();
 
-            // Publish the dentists for the first time
-            Publisher p = new Publisher();
-            System.out.println("Initial dentists: " + dentists);
-            p.sendMessage(dentists);
-            p.close();
+                // Publish the dentists for the first time
+                Publisher p = new Publisher();
+                p.sendMessage(currentRegistry);
+                p.close();
 
-            // Watcher that checks/loops for new updates to the dentists.json & publishes them
-            // watchUpdates();
+                Thread.sleep(540000);
+            }
 
+            /*while (true) {
+                DataAccessLayer dal2 = new DataAccessLayer(false);
+                DentistRegistry updatedRegistry = dal2.loadDentistRegistry();
+
+                System.out.println("updated before if: " + updatedRegistry.toString());
+                System.out.println("current before if: " + currentRegistry.toString());
+                System.out.println("outcome of if: " + updatedRegistry.toString().equals(currentRegistry.toString()));
+                if (!updatedRegistry.toString().equals(currentRegistry.toString())) {
+                    Publisher p2 = new Publisher();
+                    // System.out.println("Updated dentists: " + updatedRegistry);
+                    p2.sendMessage(updatedRegistry);
+                    //currentRegistry = updatedRegistry;
+                    p2.close();
+                    System.out.println("Published!");
+                }
+
+                System.out.println("Going to sleep now.");
+                Thread.sleep(10000); // Is this needed?
+                System.out.println("Sleep is over.");
+            }*/
         } catch (Exception e) {
             System.err.println("RIP Dentist Component!");
             e.printStackTrace();
         }
     }
-
-    /**
-     * Watches the dentists.json file for updates and publishes them when the file is modified.
-     * Example: https://dzone.com/articles/listening-to-fileevents-with-java-nio
-     * TODO: Use Observer pattern
-     * @throws Exception
-     */
-    private static void watchUpdates() throws Exception {
-        Publisher p = new Publisher(); // Here or every time there's a change? I.e. move it to line 50
-
-        WatchService watcher = FileSystems.getDefault().newWatchService();
-        Path dir = Paths.get(dentistDirPath);
-        dir.register(watcher, ENTRY_MODIFY);
-        boolean poll = true;
-
-        // Infinite loop to listen for events
-        while (poll) {
-            try {
-                WatchKey key = watcher.take();
-
-                for (WatchEvent<?> event : key.pollEvents()) {
-                    if (event.kind() == ENTRY_MODIFY && event.context().toString().equals("dentists.json")) {
-                        DataAccessLayer dal = new DataAccessLayer();
-                        DentistRegistry dentists = dal.loadDentistRegistry();
-                        System.out.println(dentists);
-                        p.sendMessage(dentists);
-                    }
-                }
-                Thread.sleep(1000); // Sleep to prevent duplicate publications
-                poll = key.reset(); // Returns false if the key is no longer valid, exits the loop
-            } catch (InterruptedException e) {
-                System.err.println("RIP Dentist Watcher!");
-                e.printStackTrace();
-            }
-        }
-
-        p.close();
-    }
 }
-
-
