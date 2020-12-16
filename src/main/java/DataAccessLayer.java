@@ -1,32 +1,33 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 import org.json.simple.parser.*;
 
 public class DataAccessLayer {
 
     /**
-     * Change the filepath variable if you want to load a different JSON file.
+     * Change the dentistRegistry variable if you want to load a different JSON.
      */
-    private final String filepath = "././dentists.json";
+    private static final String dentistRegistry = "https://raw.githubusercontent.com/feldob/dit355_2020/master/dentists.json";
 
     /**
-     * Loads dentists from a JSON file.
-     * Returns null if no dentist could be loaded/created from JSON file.
+     * Loads dentists from a JSON URL.
+     * Returns null if no dentist could be loaded/created from JSON.
      *
      * @return dentistregistry or null
      */
     public DentistRegistry loadDentistRegistry() {
-        JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader(filepath)) {
-            Object jsonObject = jsonParser.parse(reader);
+        try {
+            String out = new Scanner(new URL(dentistRegistry).openStream(), "UTF-8").useDelimiter("\\A").next();
+
+            JSONParser jsonParser = new JSONParser();
+            Object jsonObject = jsonParser.parse(out);
             JSONObject parser = (JSONObject) jsonObject;
             //Retrieves JSON for dentists
             JSONArray dentistsJSON = (JSONArray) parser.get("dentists");
@@ -80,22 +81,5 @@ public class DataAccessLayer {
         }
         DentistRegistry registry = new DentistRegistry(dentists);
         return registry;
-    }
-
-    /**
-     * Saves dentistregistry to JSON file
-     *
-     * @param DentistRegistry
-     */
-    public void saveDentists(DentistRegistry dentists) {
-        try (FileWriter file = new FileWriter(filepath)) {
-            JSONArray dentistsJSON = new JSONArray();
-            List<? extends Dentist> collection = new ArrayList<>(dentists.getDentists());
-            dentistsJSON.addAll(collection);
-            file.write("{\n\"dentists\": " + dentistsJSON.toJSONString() + "\n}");
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

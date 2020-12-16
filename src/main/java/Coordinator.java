@@ -18,7 +18,7 @@ public class Coordinator {
             p.close();
 
             // Watcher that checks/loops for new updates to the dentists.json & publishes them
-            watchUpdates();
+            // watchUpdates();
 
         } catch (Exception e) {
             System.err.println("RIP Dentist Component!");
