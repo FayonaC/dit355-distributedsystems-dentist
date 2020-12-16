@@ -55,7 +55,6 @@ public class Subscriber implements MqttCallback {
            }
        }
         System.out.println("Connection to broker reestablished!");
-        System.out.println(middleware.isConnected());
     }
 
     @Override
