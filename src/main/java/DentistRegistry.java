@@ -1,29 +1,28 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DentistRegistry {
-    private static ArrayList<Dentist> Dentists = new ArrayList<>();
+    private ArrayList<Dentist> dentists;
 
     public DentistRegistry(ArrayList<Dentist> dentists) {
-        Dentists = dentists;
+        setDentists(dentists);
     }
 
-    public static ArrayList<Dentist> getDentists() {
-        return Dentists;
+    public ArrayList<Dentist> getDentists() {
+        return dentists;
     }
 
-    public static void setDentists(ArrayList<Dentist> dentists) {
-        Dentists = dentists;
+    public void setDentists(ArrayList<Dentist> dentists) {
+        this.dentists = dentists;
     }
 
     public void addDentist(Dentist dentist) {
-        Dentists.add(dentist);
+        dentists.add(dentist);
     }
 
     @Override
     public String toString() {
         return "{\n" +
-                "\"dentists\" : " + Dentists.toString() + "\n}";
+                "\"dentists\" : " + dentists.toString() + "\n}";
     }
 
 }

@@ -1,6 +1,5 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,9 +30,7 @@ public class DataAccessLayer {
      * @return dentistregistry or null
      */
     public DentistRegistry loadDentistRegistry() throws Exception {
-        InputStream url = new URL(dentistRegistry).openStream();
-        Scanner scanner = new Scanner(url, "UTF-8");
-        String out = scanner.useDelimiter("\\A").next();
+        String out = new Scanner(new URL(dentistRegistry).openStream(), "UTF-8").useDelimiter("\\A").next();
 
         JSONParser jsonParser = new JSONParser();
         Object jsonObject = jsonParser.parse(out);
@@ -42,8 +39,6 @@ public class DataAccessLayer {
         JSONArray dentistsJSON = (JSONArray) parser.get("dentists");
         DentistRegistry registry = loadDentists(dentistsJSON);
 
-        url.close();
-        scanner.close();
         return registry;
     }
 
