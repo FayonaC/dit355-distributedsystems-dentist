@@ -1,7 +1,5 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,10 +8,20 @@ import org.json.simple.parser.*;
 
 public class DataAccessLayer {
 
+    private static String dentistRegistry;
+
     /**
-     * Change the dentistRegistry variable if you want to load a different JSON.
+     * dentistRegistry changes whether the component is running in production or not.
+     * If not, it will use the localhost for testing purposes.
+     * @param production boolean
      */
-    private static final String dentistRegistry = "https://raw.githubusercontent.com/feldob/dit355_2020/master/dentists.json";
+    public DataAccessLayer(boolean production) {
+        if (production) {
+            dentistRegistry = "https://raw.githubusercontent.com/feldob/dit355_2020/master/dentists.json";
+        } else {
+            dentistRegistry = "http://localhost:8080/dentists.json";
+        }
+    }
 
     /**
      * Loads dentists from a JSON URL.
@@ -21,28 +29,17 @@ public class DataAccessLayer {
      *
      * @return dentistregistry or null
      */
-    public DentistRegistry loadDentistRegistry() {
+    public DentistRegistry loadDentistRegistry() throws Exception {
+        String out = new Scanner(new URL(dentistRegistry).openStream(), "UTF-8").useDelimiter("\\A").next();
 
-        try {
-            String out = new Scanner(new URL(dentistRegistry).openStream(), "UTF-8").useDelimiter("\\A").next();
+        JSONParser jsonParser = new JSONParser();
+        Object jsonObject = jsonParser.parse(out);
+        JSONObject parser = (JSONObject) jsonObject;
+        //Retrieves JSON for dentists
+        JSONArray dentistsJSON = (JSONArray) parser.get("dentists");
+        DentistRegistry registry = loadDentists(dentistsJSON);
 
-            JSONParser jsonParser = new JSONParser();
-            Object jsonObject = jsonParser.parse(out);
-            JSONObject parser = (JSONObject) jsonObject;
-            //Retrieves JSON for dentists
-            JSONArray dentistsJSON = (JSONArray) parser.get("dentists");
-            DentistRegistry registry = loadDentists(dentistsJSON);
-
-            return registry;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return registry;
     }
 
     /**

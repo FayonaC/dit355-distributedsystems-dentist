@@ -13,5 +13,10 @@
 3. To ensure that installation was successful, check target folder for coordinator.jar.
 4. Move to target folder and enter command `java -jar coordinator.jar`. This will enable the Dentist component to publish messages to the MQTT Broker.
 
-### Warning
-Currently the relative paths used in DataAccessLayer and Coordinator makes it so that you can only run the component from your IDE. 
+## Test Guide
+1. Run Frontend component
+2. Change line 3 in `Coordinator.java` depending on if you're running the Dentist component in production or not
+   1. For testing: `false`
+   2. For production: `true`
+3. Run Dentist component
+4. Make a change in the `/public/dentists.json` in Frontend component to see the Dentist component publish a change. The change should be visible both in Frontend (map markers and console) and in the broker console.
