@@ -1,3 +1,5 @@
+import java.util.regex.*;
+
 public class Dentist {
 
     private long id;
@@ -37,7 +39,7 @@ public class Dentist {
     }
 
     public void setId(long id) {
-        String idValidation = String.valueOf(id); // Coverts the long id to a String to be used for validation
+        String idValidation = String.valueOf(id); // Converts the long id to a String to be used for validation
         if (idValidation.matches("[0-9]{1,4}")) { // This allows there to be up to 9999 dental offices
             this.id = id;
         } else {
@@ -50,7 +52,10 @@ public class Dentist {
     }
 
     public void setDentistName(String dentistName) {
-        if (dentistName.matches("[a-zA-Z'-]*")) {
+        Pattern p = Pattern.compile("[a-zA-Z0-9\\s]*");
+        Matcher m = p.matcher(dentistName);
+        boolean b = m.matches();
+        if (b == false) {
             throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.dentistName = dentistName;
@@ -61,8 +66,11 @@ public class Dentist {
     }
 
     public void setOwner(String owner) {
-        if (owner.matches("[a-zA-Z'-]*")) {
-            throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+    	Pattern p = Pattern.compile("[a-zA-Z\\s]*");
+        Matcher m = p.matcher(owner);
+        boolean b = m.matches();
+        if (b == false) {
+        	throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.owner = owner;
     }
@@ -72,7 +80,7 @@ public class Dentist {
     }
 
     public void setDentistNumber(long dentistNumber) {
-        String dentistNumberValidation = String.valueOf(dentistNumber); // Coverts the long dentistNumber to a String to be used for validation
+        String dentistNumberValidation = String.valueOf(dentistNumber); // Converts the long dentistNumber to a String to be used for validation
         if (dentistNumberValidation.matches("[0-9]{1,2}")) {
             this.dentistNumber = dentistNumber;
         } else {
@@ -88,8 +96,11 @@ public class Dentist {
      * Adress Slottsskogen throws exception but not "Slottsskogen "
      */
     public void setAddress(String address) {
-        if (address.matches("^[a-zA-Z0-9]+$")) {
-            throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, digits, dashes, and single quotes");
+    	Pattern p = Pattern.compile("[a-zA-Z0-9\\s]*");
+        Matcher m = p.matcher(address);
+        boolean b = m.matches();
+        if (b == false) {
+        	throw new IllegalArgumentException("Address can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.address = address;
     }
@@ -99,11 +110,14 @@ public class Dentist {
     }
 
     /**
-     * City "GÃ¶teborg" works but not "Gothenburg"
+     * City "Göteborg" works but not "Gothenburg "
      */
     public void setCity(String city) {
-        if (city.matches("^[a-zA-Z]+$")) {
-            throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
+    	Pattern p = Pattern.compile("^[a-zA-Z\\u0080-\\u024F]+(?:. |-| |')*([1-9a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$");
+        Matcher m = p.matcher(city);
+        boolean b = m.matches();
+        if (b == false) {
+        	throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, and single quotes");
         }
         this.city = city;
     }
@@ -116,8 +130,8 @@ public class Dentist {
      * Latitude and longitude throws exceptions for correct coordinates
      */
     public void setLatitude(double latitude) {
-        String latitudeValidation = String.valueOf(latitude); // Coverts the double latitude to a String to be used for validation
-        if (latitudeValidation.matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+        String latitudeValidation = String.valueOf(latitude); // Converts the double latitude to a String to be used for validation
+        if (latitudeValidation.matches("^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$")) {
             /*
             * The regex was taken from this StackOverFlow forum: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
             * on December 15th, 2020
@@ -136,15 +150,15 @@ public class Dentist {
      * Latitude and longitude throws exceptions for correct coordinates
      */
     public void setLongitude(double longitude) {
-        String longitudeValidation = String.valueOf(latitude); // Coverts the double longitude to a String to be used for validation
-        if (longitudeValidation.matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+        String longitudeValidation = String.valueOf(latitude); // Converts the double longitude to a String to be used for validation
+        if (longitudeValidation.matches("^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$")) {
             /*
              * The regex was taken from this StackOverFlow forum: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
              * on December 15th, 2020
              */
             this.longitude = longitude;
         } else {
-            throw new IllegalArgumentException("Latitude has to be nine characters long and consist of numbers, including a dot");
+            throw new IllegalArgumentException("Longitude has to be nine characters long and consist of numbers, including a dot");
         }
     }
 
@@ -152,12 +166,9 @@ public class Dentist {
         return monday;
     }
 
-    /**
-     * Goes for all dates:
-     * It'll allow me to set times like "06:00sdfa" and "06:00-0" etc
-     */
+
     public void setMonday(String monday) {
-        if (monday.matches("^[0-9][:][-]{9,11}$")) { // This could be changed to an eleven character limit if we're allowed to add 0s to the JSON which should (hopefully) make the validation easier/correct
+        if (monday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.monday = monday;
@@ -168,7 +179,7 @@ public class Dentist {
     }
 
     public void setTuesday(String tuesday) {
-        if (tuesday.matches("^[0-9][:][-]{9,11}$")) {
+        if (tuesday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.tuesday = tuesday;
@@ -179,7 +190,7 @@ public class Dentist {
     }
 
     public void setWednesday(String wednesday) {
-        if (wednesday.matches("^[0-9][:][-]{9,11}$")) {
+        if (wednesday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.wednesday = wednesday;
@@ -190,7 +201,7 @@ public class Dentist {
     }
 
     public void setThursday(String thursday) {
-        if (thursday.matches("^[0-9][:][-]{9,11}$")) {
+        if (thursday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.thursday = thursday;
@@ -201,7 +212,7 @@ public class Dentist {
     }
 
     public void setFriday(String friday) {
-        if (friday.matches("^[0-9][:][-]{9,11}$")) {
+        if (friday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and consist of numbers, colons, and dashes");
         }
         this.friday = friday;
