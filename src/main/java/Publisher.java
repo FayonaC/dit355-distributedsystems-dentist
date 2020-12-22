@@ -27,6 +27,7 @@ public class Publisher {
     void sendMessage(DentistRegistry message) throws MqttPersistenceException, MqttException {
         MqttMessage mqttMessage = new MqttMessage();
         mqttMessage.setRetained(true);
+        mqttMessage.setQos(1);
         String msg = message.toString();
         mqttMessage.setPayload(msg.getBytes()); /*move messageTest into payload*/
         middleware.publish(TOPIC, mqttMessage);
