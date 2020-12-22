@@ -1,9 +1,16 @@
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
+
 public class Coordinator {
 
     private static boolean Production = true;
 
     public static void main(String[] args) {
+
         try {
+            /*System.out.println(new Dentist(1, "Pain R Us", "Maso Chist", 2,
+                    "Öäöäø 2", "Trollhättan", 11.458796, 55.457863, "9:00-18:00",
+                    "9:00-18:00","9:00-18:00","9:00-18:00","9:00-18:00"));*/
             // Load the dentists for the first time
             DataAccessLayer dal = new DataAccessLayer(Production);
             DentistRegistry currentRegistry = dal.loadDentistRegistry();
@@ -30,8 +37,16 @@ public class Coordinator {
 
                 Thread.sleep(10000);
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             System.err.println("RIP Dentist Component!");
+            e.printStackTrace();
+        } catch (MqttPersistenceException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
