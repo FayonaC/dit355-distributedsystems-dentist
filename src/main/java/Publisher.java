@@ -20,6 +20,7 @@ public class Publisher {
     }
 
     void close() throws MqttException {
+        middleware.unsubscribe("Dentists");
         middleware.disconnect();
         middleware.close();
     }

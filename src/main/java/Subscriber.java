@@ -42,6 +42,7 @@ public class Subscriber implements MqttCallback {
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("Connection lost!");
+
        while (middleware.isConnected() == false) {
 
            // Reestablish connection lost
@@ -54,6 +55,11 @@ public class Subscriber implements MqttCallback {
                throwable.getMessage();
            }
        }
+        try {
+            middleware.subscribe("SuccessfulBooking");
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
         System.out.println("Connection to broker reestablished!");
     }
 
