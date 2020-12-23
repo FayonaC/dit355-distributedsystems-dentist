@@ -72,9 +72,12 @@ public class DataAccessLayer {
             String thursday = (String) openinghoursObj.get("thursday");
             String friday = (String) openinghoursObj.get("friday");
 
-            dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city,
-                    latitude, longitude, monday, tuesday, wednesday, thursday,
-                    friday));
+            try {
+            	dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city, 
+            			latitude, longitude, monday, tuesday, wednesday, thursday, friday));
+            } catch (IllegalArgumentException e) {
+            	System.err.println("Error when creating new Dentist: " + e.getMessage());
+            } 
         }
         DentistRegistry registry = new DentistRegistry(dentists);
         return registry;

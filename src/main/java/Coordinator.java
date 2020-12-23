@@ -5,12 +5,9 @@ public class Coordinator {
 
     private static boolean Production = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         try {
-            /*System.out.println(new Dentist(1, "Pain R Us", "Maso Chist", 2,
-                    "Öäöäø 2", "Trollhättan", 11.458796, 55.457863, "9:00-18:00",
-                    "9:00-18:00","9:00-18:00","9:00-18:00","9:00-18:00"));*/
             // Load the dentists for the first time
             DataAccessLayer dal = new DataAccessLayer(Production);
             DentistRegistry currentRegistry = dal.loadDentistRegistry();
@@ -38,7 +35,7 @@ public class Coordinator {
                 Thread.sleep(10000);
             }
         } catch (RuntimeException e) {
-            System.err.println("RIP Dentist Component!");
+            System.err.println("Component stopped working.");
             e.printStackTrace();
         } catch (MqttPersistenceException e) {
             e.printStackTrace();

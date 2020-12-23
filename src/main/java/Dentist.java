@@ -6,8 +6,8 @@ public class Dentist {
     private String dentistName;
     private String owner;
     private long dentistNumber;
-    private String address;
-    private String city;
+    private String address = "";
+    private String city = "";
     private double latitude;
     private double longitude;
     private String monday;
@@ -43,7 +43,7 @@ public class Dentist {
         if (idValidation.matches("[0-9]{1,4}")) { // This allows there to be up to 9999 dental offices
             this.id = id;
         } else {
-            throw new IllegalArgumentException("Id can be between one and four digits long");
+            throw new IllegalArgumentException("Id can be between one and four digits long: " + id);
         }
     }
 
@@ -57,7 +57,7 @@ public class Dentist {
         boolean b = m.matches();
         if (b == false) {
             throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, " +
-                    "dashes, and single quotes");
+                    "dashes, and single quotes: " + dentistName);
         }
         this.dentistName = dentistName;
     }
@@ -72,7 +72,7 @@ public class Dentist {
         boolean b = m.matches();
         if (b == false) {
         	throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, " +
-                    "dashes, and single quotes");
+                    "dashes, and single quotes: " + owner);
         }
         this.owner = owner;
     }
@@ -87,31 +87,28 @@ public class Dentist {
         if (dentistNumberValidation.matches("[0-9]{1,2}")) {
             this.dentistNumber = dentistNumber;
         } else {
-            throw new IllegalArgumentException("Number of dentists can be between one and two digits long");
+            throw new IllegalArgumentException("Number of dentists can be between one and two digits long: " + dentistNumber);
         }
     }
 
     public String getAddress() {
         return address;
     }
-
+/**
+ * 
+ * @param address
+ * @throws IllegalArgumentException
+ */
     public void setAddress(String address) throws IllegalArgumentException {
-
-        try {
-            Pattern p = Pattern.compile("[a-zA-Z0-9√©√•√Ö√§√Ñ√∂√ñ\\s]*");
+           Pattern p = Pattern.compile("^[A-Za-z0-9≈ƒ÷Â‰ˆÈ ]+$");
             Matcher m = p.matcher(address);
             boolean b = m.matches();
 
             if (b == true) {
                 this.address = address;
             } else {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Illegal characters in adress: " + address);
             }
-        } catch (IllegalArgumentException e)  {
-                System.err.println("Address can only consist of lowercase letters, uppercase letters, " +
-                        "dashes, and single quotes");
-                e.printStackTrace();
-        }
     }
 
 
@@ -120,12 +117,11 @@ public class Dentist {
     }
 
     public void setCity(String city) {
-    	Pattern p = Pattern.compile("^[a-zA-Z\\u0080-\\u024F]+(?:. |-| |')*([1-9a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$");
+    	Pattern p = Pattern.compile("^[A-Za-z0-9≈ƒ÷Â‰ˆÈ ]+$");
         Matcher m = p.matcher(city);
         boolean b = m.matches();
         if (b == false) {
-        	throw new IllegalArgumentException("City can only consist of lowercase letters, uppercase letters, dashes, " +
-                    "and single quotes");
+        	throw new IllegalArgumentException("Illegal characters in city: " + city);
         }
         this.city = city;
     }
@@ -143,7 +139,7 @@ public class Dentist {
             */
             this.latitude = latitude;
         } else {
-            throw new IllegalArgumentException("Latitude has to be nine characters long and consist of numbers, including a dot");
+            throw new IllegalArgumentException("Latitude has to be nine characters long and consist of numbers, including a dot: " + latitude);
         }
     }
 
@@ -160,7 +156,7 @@ public class Dentist {
              */
             this.longitude = longitude;
         } else {
-            throw new IllegalArgumentException("Longitude has to be nine characters long and consist of numbers, including a dot");
+            throw new IllegalArgumentException("Longitude has to be nine characters long and consist of numbers, including a dot: " + longitude);
         }
     }
 
@@ -172,7 +168,7 @@ public class Dentist {
     public void setMonday(String monday) {
         if (monday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and " +
-                    "consist of numbers, colons, and dashes");
+                    "consist of numbers, colons, and dashes (in format 7:00-14:00): " + monday);
         }
         this.monday = monday;
     }
@@ -184,7 +180,7 @@ public class Dentist {
     public void setTuesday(String tuesday) {
         if (tuesday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and " +
-                    "consist of numbers, colons, and dashes");
+                    "consist of numbers, colons, and dashes (in format 7:00-14:00): " + tuesday);
         }
         this.tuesday = tuesday;
     }
@@ -196,7 +192,7 @@ public class Dentist {
     public void setWednesday(String wednesday) {
         if (wednesday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and " +
-                    "consist of numbers, colons, and dashes");
+                    "consist of numbers, colons, and dashes (in format 7:00-14:00): " + wednesday);
         }
         this.wednesday = wednesday;
     }
@@ -208,7 +204,7 @@ public class Dentist {
     public void setThursday(String thursday) {
         if (thursday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and " +
-                    "consist of numbers, colons, and dashes");
+                    "consist of numbers, colons, and dashes (in format 7:00-14:00): " + thursday);
         }
         this.thursday = thursday;
     }
@@ -220,7 +216,7 @@ public class Dentist {
     public void setFriday(String friday) {
         if (friday.matches("^[0-9][:][-]{10,11}$")) {
             throw new IllegalArgumentException("Opening hours has to be between nine and eleven characters long and " +
-                    "consist of numbers, colons, and dashes");
+                    "consist of numbers, colons, and dashes (in format 7:00-14:00): " + friday);
         }
         this.friday = friday;
     }
