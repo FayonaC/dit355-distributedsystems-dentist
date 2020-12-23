@@ -23,7 +23,8 @@ public class Dentist {
         setDentistName(dentistName);
         setOwner(owner);
         setDentistNumber(dentistNumber);
-        setAddress(address);
+       // setAddress(address);
+        this.address = address;
         setCity(city);
         setLatitude(latitude);
         setLongitude(longitude);
