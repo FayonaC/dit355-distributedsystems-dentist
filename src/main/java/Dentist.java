@@ -56,8 +56,7 @@ public class Dentist {
         Matcher m = p.matcher(dentistName);
         boolean b = m.matches();
         if (b == false) {
-            throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, " +
-                    "dashes, and single quotes: " + dentistName);
+            throw new IllegalArgumentException("Dentist name can only consist of lowercase letters, uppercase letters, and numbers: " + dentistName);
         }
         this.dentistName = dentistName;
     }
@@ -71,8 +70,7 @@ public class Dentist {
         Matcher m = p.matcher(owner);
         boolean b = m.matches();
         if (b == false) {
-        	throw new IllegalArgumentException("Owner name can only consist of lowercase letters, uppercase letters, " +
-                    "dashes, and single quotes: " + owner);
+        	throw new IllegalArgumentException("Owner name can only consist of lowercase letters and uppercase letters: " + owner);
         }
         this.owner = owner;
     }
@@ -100,15 +98,15 @@ public class Dentist {
  * @throws IllegalArgumentException
  */
     public void setAddress(String address) throws IllegalArgumentException {
-           Pattern p = Pattern.compile("^[A-Za-z0-9≈ƒ÷Â‰ˆÈ ]+$");
-            Matcher m = p.matcher(address);
-            boolean b = m.matches();
+    	Pattern p = Pattern.compile("^[^!?(){}<>#;/%&$£@=+*]+$");
+        Matcher m = p.matcher(address);
+        boolean b = m.matches();
 
-            if (b == true) {
-                this.address = address;
-            } else {
-                throw new IllegalArgumentException("Illegal characters in adress: " + address);
-            }
+        if (b == true) {
+            this.address = address;
+         } else {
+            throw new IllegalArgumentException("Illegal characters in adress: " + address);
+         }
     }
 
 
@@ -117,7 +115,7 @@ public class Dentist {
     }
 
     public void setCity(String city) {
-    	Pattern p = Pattern.compile("^[A-Za-z0-9≈ƒ÷Â‰ˆÈ ]+$");
+    	Pattern p = Pattern.compile("^[^!?(){}<>#;/%&$£@=+*]+$");
         Matcher m = p.matcher(city);
         boolean b = m.matches();
         if (b == false) {

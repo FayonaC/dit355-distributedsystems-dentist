@@ -6,7 +6,7 @@ public class Coordinator {
     private static boolean Production = true;
 
     public static void main(String[] args){
-
+    	
         try {
             // Load the dentists for the first time
             DataAccessLayer dal = new DataAccessLayer(Production);
@@ -29,8 +29,8 @@ public class Coordinator {
                     Publisher p2 = new Publisher();
                     p2.sendMessage(updatedRegistry);
                     currentRegistry = updatedRegistry;
-                    p2.close();
-                }
+                    p2.close(); 
+                } 
 
                 Thread.sleep(10000);
             }
