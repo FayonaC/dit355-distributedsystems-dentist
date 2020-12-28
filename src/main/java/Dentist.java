@@ -6,8 +6,8 @@ public class Dentist {
     private String dentistName;
     private String owner;
     private long dentistNumber;
-    private String address = "";
-    private String city = "";
+    private String address;
+    private String city;
     private double latitude;
     private double longitude;
     private String monday;
