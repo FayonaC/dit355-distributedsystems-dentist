@@ -53,28 +53,34 @@ public class DataAccessLayer {
 
         for (Object dentist : arr) {
             JSONObject dentistObj = (JSONObject) dentist;
+            try {
+                long id = (Long) dentistObj.get("id");
+                String dentistName = (String) dentistObj.get("name");
+                String owner = (String) dentistObj.get("owner");
+                long dentistNumber = (Long) dentistObj.get("dentists");
+                String address = (String) dentistObj.get("address");
+                String city = (String) dentistObj.get("city");
 
-            long id = (Long) dentistObj.get("id");
-            String dentistName = (String) dentistObj.get("name");
-            String owner = (String) dentistObj.get("owner");
-            long dentistNumber = (Long) dentistObj.get("dentists");
-            String address = (String) dentistObj.get("address");
-            String city = (String) dentistObj.get("city");
+                JSONObject coordinateObj = (JSONObject) dentistObj.get("coordinate");
+                JSONObject openinghoursObj = (JSONObject) dentistObj.get("openinghours");
 
-            JSONObject coordinateObj = (JSONObject) dentistObj.get("coordinate");
-            JSONObject openinghoursObj = (JSONObject) dentistObj.get("openinghours");
+                double latitude = (Double) coordinateObj.get("latitude");
+                double longitude = (Double) coordinateObj.get("longitude");
+                String monday = (String) openinghoursObj.get("monday");
+                String tuesday = (String) openinghoursObj.get("tuesday");
+                String wednesday = (String) openinghoursObj.get("wednesday");
+                String thursday = (String) openinghoursObj.get("thursday");
+                String friday = (String) openinghoursObj.get("friday");
 
-            double latitude = (Double) coordinateObj.get("latitude");
-            double longitude = (Double) coordinateObj.get("longitude");
-            String monday = (String) openinghoursObj.get("monday");
-            String tuesday = (String) openinghoursObj.get("tuesday");
-            String wednesday = (String) openinghoursObj.get("wednesday");
-            String thursday = (String) openinghoursObj.get("thursday");
-            String friday = (String) openinghoursObj.get("friday");
-
-            dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city,
-                    latitude, longitude, monday, tuesday, wednesday, thursday,
-                    friday));
+            	dentists.add(new Dentist(id, dentistName, owner, dentistNumber, address, city, 
+            			latitude, longitude, monday, tuesday, wednesday, thursday, friday));
+            } catch (IllegalArgumentException e) {
+            	System.err.println("Error when creating new Dentist: " + e.getMessage());
+            	System.err.println(dentistObj);
+            } catch (ClassCastException e) {
+                System.err.println("Error when creating new Dentist: " + e.getMessage());
+                System.err.println(dentistObj);
+            }
         }
         DentistRegistry registry = new DentistRegistry(dentists);
         return registry;
