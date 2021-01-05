@@ -20,3 +20,6 @@
    2. For production: `true`
 3. Run Dentist component
 4. Make a change in the `/public/dentists.json` in Frontend component to see the Dentist component publish a change. The change should be visible both in Frontend (map markers and console) and in the broker console.
+
+## Subscriber.java
+This class was added to the Dentist component for future development where it might be desirable to have the Dentist component subscribe. With the current set of requirements, the Dentist component only needs to publish data from the external Dentist Repository so the class is unused.
