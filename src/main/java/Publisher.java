@@ -4,6 +4,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
+import java.nio.charset.StandardCharsets;
+
 public class Publisher {
 
     private final static String TOPIC = "Dentists";
@@ -30,7 +32,7 @@ public class Publisher {
         mqttMessage.setRetained(true);
         mqttMessage.setQos(1);
         String msg = message.toString();
-        mqttMessage.setPayload(msg.getBytes()); /*move messageTest into payload*/
+        mqttMessage.setPayload(msg.getBytes(StandardCharsets.UTF_8)); /*move messageTest into payload*/
         middleware.publish(TOPIC, mqttMessage);
     }
 }
